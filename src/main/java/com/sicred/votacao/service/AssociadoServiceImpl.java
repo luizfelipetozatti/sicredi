@@ -11,6 +11,9 @@ public class AssociadoServiceImpl implements AssociadoService {
     @Autowired
     AssociadoRepository associadoRepository;
 
+    @Autowired
+    AssociadoConsumer associadoConsumer;
+
     @Override
     public Associado cadastrar(AssociadoDTO associadoDTO) {
         Associado associado = Associado.builder()
@@ -18,5 +21,10 @@ public class AssociadoServiceImpl implements AssociadoService {
                 .cpf(associadoDTO.getCpf())
                 .build();
         return associadoRepository.save(associado);
+    }
+
+    @Override
+    public boolean associadoPodeVotar(String cpf) {
+        return associadoConsumer.associadoPodeVotar(cpf) == "ABLE_TO_VOTE";
     }
 }

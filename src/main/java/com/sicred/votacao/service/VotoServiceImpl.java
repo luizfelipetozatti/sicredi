@@ -23,6 +23,9 @@ public class VotoServiceImpl implements VotoService {
     @Autowired
     AssociadoRepository associadoRepository;
 
+    @Autowired
+    AssociadoService associadoService;
+
     @Override
     public Voto votar(VotoDTO votoDTO) throws Exception {
         if (!pautaService.sessaoAberta(votoDTO.getIdPauta())) {
@@ -34,6 +37,11 @@ public class VotoServiceImpl implements VotoService {
         }
 
         Associado associado = associadoRepository.findById(votoDTO.getIdAssociado()).get();
+
+        if (!associadoService.associadoPodeVotar(associado.getCpf())){
+            throw new Exception("Associado não pode votar!");
+        }
+
         Pauta pauta = pautaRepository.findById(votoDTO.getIdPauta()).get();
         Voto voto = Voto.builder()
                 .pauta(pauta)
