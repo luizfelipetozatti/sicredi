@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Service
 public class PautaServiceImpl implements PautaService {
@@ -16,13 +16,12 @@ public class PautaServiceImpl implements PautaService {
     @Override
     public boolean sessaoAberta(Integer idPauta) {
         Pauta pauta = pautaRepository.findById(idPauta).get();
-        return (Duration.between(LocalDate.now(),pauta.getAberturaSessao()).toMinutes() <= 1L);
-
+        return (Duration.between(pauta.getAberturaSessao(), LocalDateTime.now()).toMinutes() <= 1L);
     }
 
     @Override
     public boolean associadoJaVotou(Integer idPauta, Integer idAssociado) {
-        return pautaRepository.findByIdAndIdAssociado(idPauta, idAssociado).getId() > 0;
+        return pautaRepository.findByIdAndIdAssociado(idPauta, idAssociado) > 0;
     }
 
     @Override

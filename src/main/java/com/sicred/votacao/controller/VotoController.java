@@ -27,7 +27,7 @@ public class VotoController {
         try {
             return ResponseEntity.ok(votoService.votar(votoDTO));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
     }
 }

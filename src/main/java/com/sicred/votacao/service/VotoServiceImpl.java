@@ -8,7 +8,7 @@ import com.sicred.votacao.repository.VotoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Service
 public class VotoServiceImpl implements VotoService {
@@ -33,8 +33,8 @@ public class VotoServiceImpl implements VotoService {
             throw new Exception("Associado já votou nessa pauta!");
         }
 
-        Pauta pauta = pautaRepository.findById(votoDTO.getIdPauta()).get();
         Associado associado = associadoRepository.findById(votoDTO.getIdAssociado()).get();
+        Pauta pauta = pautaRepository.findById(votoDTO.getIdPauta()).get();
         Voto voto = Voto.builder()
                 .pauta(pauta)
                 .associado(associado)
@@ -48,7 +48,7 @@ public class VotoServiceImpl implements VotoService {
         Pauta pauta = Pauta.builder()
                 .nome(pautaDTO.getNome())
                 .sessao(SessaoEnum.ABERTA)
-                .aberturaSessao(LocalDate.now())
+                .aberturaSessao(LocalDateTime.now())
                 .build();
         return pautaService.salvar(pauta);
     }

@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class Pauta {
     private int id;
     private String nome;
     private SessaoEnum sessao;
-    private LocalDate aberturaSessao;
+    private LocalDateTime aberturaSessao;
     @Builder.Default
     @OneToMany(mappedBy = "pauta", cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     private List<Voto> votos = new ArrayList<>();
